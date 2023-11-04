@@ -4,7 +4,7 @@ import copy from './copy.svg'
 import logo from './logo.svg'
 import tick from './tick.svg'
 
-export {
+export default {
     linkIcon,
     loader,
     copy,
