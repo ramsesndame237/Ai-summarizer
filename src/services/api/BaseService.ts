@@ -3,6 +3,7 @@ import config from "../../config/config.ts";
 class BaseService {
     static getHeaders = (isRapid:boolean) => {
         const headers = new Headers()
+        console.log({isRapid})
         if(isRapid){
             headers.append('X-RapidAPI-Key', config.rapid_key ?? '')
             headers.append('X-RapidAPI-Host', config.rapid_host ?? '')
