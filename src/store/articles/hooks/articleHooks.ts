@@ -1,4 +1,4 @@
-import {useMutation, useQuery} from "@tanstack/react-query";
+import {useMutation} from "@tanstack/react-query";
 import BaseService from "../../../services/api/BaseService.ts";
 import {ArticleUrls} from "../../../services/api/urls.ts";
 
@@ -12,7 +12,7 @@ export const useHooksArticle = (setLoading: (loading: boolean) => void) => {
             setLoading(true)
             let data: any;
             try {
-                const response = await BaseService.getRequest(ArticleUrls.GET_ARTICLE_SUMARIZE(urlParams, "3"), true)
+                const response:any = await BaseService.getRequest(ArticleUrls.GET_ARTICLE_SUMARIZE(urlParams, "3"), true)
 
                 data = await response.json()
 
