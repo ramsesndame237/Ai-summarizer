@@ -15,6 +15,7 @@ const Demo = () => {
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<Error | undefined>(undefined)
     const useArticleSummariseMutation = useHooksArticle(setLoading)
+    const [copy,setCopy]=useState('')
     const [allArticles, setAllArticles] = useState<ArticleSummary[]>([])
     useEffect(() => {
         const articlesJSON = localStorage.getItem('articles')
@@ -28,6 +29,14 @@ const Demo = () => {
             localStorage.setItem('articles', JSON.stringify([]))
         }
     }, [])
+    const handleCopy = (url:string)=>{
+        setCopy(url)
+        navigator.clipboard.writeText(url).then(()=>{
+            console.log(url)
+        })
+        setTimeout(() => setCopy(''),3000)
+
+    }
     const handleSubmit = async (e: any) => {
         e.preventDefault()
         useArticleSummariseMutation.mutate(article.url ?? '', {
@@ -68,8 +77,8 @@ const Demo = () => {
                                 onClick={() => setArticle(article)}
                                 className="link_card"
                             >
-                                <div className="copy_btn">
-                                    <img src={asset.copy} alt="copy_icon" className="w-[40%] h-[40%] object-contain"/>
+                                <div className="copy_btn" onClick={()=>handleCopy(article.url)}>
+                                    <img src={copy === '' ?  asset.copy : asset.tick} alt="copy_icon" className="w-[40%] h-[40%] object-contain"/>
                                 </div>
                                 <p className="flex-1 font-satoshi text-blue-700 font-medium text-sm truncate">
                                     {article.url}
@@ -96,7 +105,7 @@ const Demo = () => {
                         </span>
                         </h2>
                         <div className="summary_box">
-                            <p>
+                            <p className="font-inter font-medium test-sm text-gray-700">
                                 {article.summary}
                             </p>
                         </div>
