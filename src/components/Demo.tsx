@@ -13,7 +13,7 @@ const Demo = () => {
         summary: ''
     })
     const [loading, setLoading] = useState<boolean>(false)
-    const [error, setError] = useState<any>()
+    const [error, setError] = useState<Error | undefined>(undefined)
     const useArticleSummariseMutation = useHooksArticle(setLoading)
     const [allArticles, setAllArticles] = useState<ArticleSummary[]>([])
     useEffect(() => {
@@ -40,6 +40,9 @@ const Demo = () => {
                         setAllArticles(updateAllArticles)
                         localStorage.setItem('articles', JSON.stringify(updateAllArticles))
                     }
+                },
+                onError: (error) => {
+                    setError(error)
                 }
 
             }
@@ -84,7 +87,7 @@ const Demo = () => {
                             Well, that wasn't supposed to happen....
                             <br/>
                             <span className="font-satoshi font-normal text-gray-700">
-                                {error?.data?.error}
+                                {error.message}
                             </span>
                         </p>) : (article.summary ? (<div className="flex flex-col gap-3">
                         <h2 className="font-satoshi font-bold text-gray-600 text-xl">
